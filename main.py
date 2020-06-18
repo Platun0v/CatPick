@@ -19,7 +19,7 @@ logger.add('catpick.log')
 
 class Vk:
     def __init__(self, token):
-        self.vk = vk_api.VkApi(token=TOKEN)
+        self.vk = vk_api.VkApi(token=token)
         self.api = self.vk.get_api()
 
     def upload_avatar(self, f_name):
@@ -30,11 +30,15 @@ class Vk:
 
     def get_old_photo_id(self):
         resp = self.vk.method('photos.get', {'album_id': '-6'})
+        logger.info(resp)
+
         if resp['count'] < 2:
             return
+
         photo_id = None
         mn_date = 10000000000
-        for e in resp:
+
+        for e in resp['items']:
             if e['date'] < mn_date:
                 mn_date = e['date']
                 photo_id = e['id']
@@ -49,6 +53,24 @@ class Vk:
         resp = self.vk.method('photos.delete', {'photo_id': old_photo_id})
         logger.info(resp)
 
+    def get_last_post(self):
+        wall = self.vk.method('wall.get')
+        logger.info(wall)
+
+        if wall['count'] == 0:
+            return
+
+        post_id = wall['items'][0]['id']
+        return post_id
+
+    def delete_last_post(self):
+        post_id = self.get_last_post()
+        if not post_id:
+            return
+
+        resp = self.vk.method('wall.delete', {'post_id': post_id})
+        logger.info(resp)
+
 
 def get_new_cat(f_name):
     resp = requests.get(CAT_URL)
@@ -59,13 +81,16 @@ def get_new_cat(f_name):
 @logger.catch
 def process():
     get_new_cat(STANDARD_FILE_NAME)
+
     vk = Vk(TOKEN)
 
     vk.upload_avatar(STANDARD_FILE_NAME)
     vk.delete_old_photo()
+    vk.delete_last_post()
 
 
 if __name__ == '__main__':
+    # process()
     t = Timer(process)
     t.call_everyday((WHEN_TO_CALL,))
     t.run()
