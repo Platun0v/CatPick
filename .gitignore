@@ -1,9 +1,11 @@
+# For this project
+img.jpeg
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-cat.jpeg
-**/.idea
 
 # C extensions
 *.so

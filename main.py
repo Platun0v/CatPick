@@ -1,18 +1,9 @@
-import os
-import datetime
-
 import requests
 import vk_api
 from vk_api.upload import VkUpload
 from loguru import logger
 
-from timer import Timer
-
-CAT_URL = 'https://source.unsplash.com/featured/?cat'
-WHEN_TO_CALL = datetime.time(0, 0, 0)
-TOKEN = os.getenv('VK_TOKEN')
-STANDARD_FILE_NAME = 'cat.jpeg'
-
+import config
 
 logger.add('catpick.log')
 
@@ -73,24 +64,21 @@ class Vk:
 
 
 def get_new_cat(f_name):
-    resp = requests.get(CAT_URL)
+    resp = requests.get(config.UNSPLASH_URL)
     with open(f_name, 'wb') as f:
         f.write(resp.content)
 
 
 @logger.catch
 def process():
-    get_new_cat(STANDARD_FILE_NAME)
+    get_new_cat(config.STANDARD_FILE_NAME)
 
-    vk = Vk(TOKEN)
+    vk = Vk(config.TOKEN)
 
-    vk.upload_avatar(STANDARD_FILE_NAME)
+    vk.upload_avatar(config.STANDARD_FILE_NAME)
     vk.delete_old_photo()
     vk.delete_last_post()
 
 
 if __name__ == '__main__':
-    # process()
-    t = Timer(process)
-    t.call_everyday((WHEN_TO_CALL,))
-    t.run()
+    process()
