@@ -1,2 +1,3 @@
 requests
 loguru
+vk_api
