@@ -19,7 +19,7 @@ class Vk:
             resp = upload.photo_profile(f)
             logger.info(resp)
 
-    def get_old_photo_id(self):
+    def get_old_photo_id(self):  # TODO: переписать этот треш, который как-то работает у меня
         resp = self.vk.method('photos.get', {'album_id': '-6'})
         logger.info(resp)
 
