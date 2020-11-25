@@ -1,6 +1,7 @@
 import requests
 import vk_api
 from vk_api.upload import VkUpload
+from telethon.sync import TelegramClient, functions
 from loguru import logger
 
 import config
@@ -63,6 +64,31 @@ class Vk:
         logger.info(resp)
 
 
+class Tg:
+    def __init__(self, session_name='CatPick'):
+        self.client = TelegramClient(session_name, config.API_ID, config.API_HASH)
+        self.client.connect()
+
+    def get_last_photo(self):  # 1921618168832436147
+        result = self.client(functions.photos.GetUserPhotosRequest(
+            user_id='platun0v',
+            offset=0,
+            max_id=0,
+            limit=100
+        )).photos[0]
+        logger.info(result)
+        return result
+
+    def delete_old_photo(self):
+        photo = self.get_last_photo()
+        result = self.client(functions.photos.DeletePhotosRequest(id=[photo]))
+        logger.info(result)
+
+    def upload_avatar(self, f_name: str):
+        result = self.client(functions.photos.UploadProfilePhotoRequest(file=self.client.upload_file(f_name)))
+        logger.info(result)
+
+
 def get_new_cat(f_name):
     resp = requests.get(config.UNSPLASH_URL)
     with open(f_name, 'wb') as f:
@@ -78,6 +104,11 @@ def process():
     vk.upload_avatar(config.STANDARD_FILE_NAME)
     vk.delete_old_photo()
     vk.delete_last_post()
+
+    tg = Tg()
+
+    tg.delete_old_photo()
+    tg.upload_avatar(config.STANDARD_FILE_NAME)
 
 
 if __name__ == '__main__':

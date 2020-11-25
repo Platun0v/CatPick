@@ -1,4 +1,5 @@
 requests
 loguru
 vk_api
+telethon
 python_dotenv

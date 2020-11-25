@@ -10,4 +10,7 @@ UNSPLASH_URL = f'https://source.unsplash.com/featured/?{AVATAR_PICTURE}'
 # За другими вариантами рандомного изображения можно сходить сюда https://source.unsplash.com/
 
 TOKEN = os.getenv('VK_TOKEN')
+API_ID = os.getenv('TG_API_ID')
+API_HASH = os.getenv('TG_API_HASH')
+
 STANDARD_FILE_NAME = 'img.jpeg'
