@@ -14,3 +14,4 @@ API_ID = os.getenv('TG_API_ID')
 API_HASH = os.getenv('TG_API_HASH')
 
 STANDARD_FILE_NAME = 'img.jpeg'
+IMGS_DIR = 'imgs'

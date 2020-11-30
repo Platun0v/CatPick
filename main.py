@@ -1,3 +1,7 @@
+import os
+import random
+from typing import List
+
 import requests
 import vk_api
 from vk_api.upload import VkUpload
@@ -90,25 +94,44 @@ class Tg:
 
 
 def get_new_cat(f_name):
+    dir_file = check_dir(config.IMGS_DIR)
+    if dir_file:
+        mv_img(f'{config.IMGS_DIR}/{dir_file}', f_name)
+        return
     resp = requests.get(config.UNSPLASH_URL)
     with open(f_name, 'wb') as f:
         f.write(resp.content)
+
+
+def check_dir(imgs_dir: str) -> str:
+    if not os.path.exists(imgs_dir):
+        os.mkdir(imgs_dir)
+
+    files = os.listdir(imgs_dir)
+    if files:
+        return random.choice(files)
+    return ''
+
+
+def mv_img(old_file: str, new_file: str):
+    os.remove(new_file)
+    os.rename(old_file, new_file)
 
 
 @logger.catch
 def process():
     get_new_cat(config.STANDARD_FILE_NAME)
 
-    vk = Vk(config.TOKEN)
-
-    vk.upload_avatar(config.STANDARD_FILE_NAME)
-    vk.delete_old_photo()
-    vk.delete_last_post()
-
-    tg = Tg()
-
-    tg.delete_old_photo()
-    tg.upload_avatar(config.STANDARD_FILE_NAME)
+    # vk = Vk(config.TOKEN)
+    #
+    # vk.upload_avatar(config.STANDARD_FILE_NAME)
+    # vk.delete_old_photo()
+    # vk.delete_last_post()
+    #
+    # tg = Tg()
+    #
+    # tg.delete_old_photo()
+    # tg.upload_avatar(config.STANDARD_FILE_NAME)
 
 
 if __name__ == '__main__':
