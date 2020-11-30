@@ -122,16 +122,16 @@ def mv_img(old_file: str, new_file: str):
 def process():
     get_new_cat(config.STANDARD_FILE_NAME)
 
-    # vk = Vk(config.TOKEN)
-    #
-    # vk.upload_avatar(config.STANDARD_FILE_NAME)
-    # vk.delete_old_photo()
-    # vk.delete_last_post()
-    #
-    # tg = Tg()
-    #
-    # tg.delete_old_photo()
-    # tg.upload_avatar(config.STANDARD_FILE_NAME)
+    vk = Vk(config.TOKEN)
+
+    vk.upload_avatar(config.STANDARD_FILE_NAME)
+    vk.delete_old_photo()
+    vk.delete_last_post()
+
+    tg = Tg()
+
+    tg.delete_old_photo()
+    tg.upload_avatar(config.STANDARD_FILE_NAME)
 
 
 if __name__ == '__main__':
