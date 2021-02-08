@@ -1,7 +1,8 @@
 # For this project
 **/.idea
 *.session
-img.jpeg
+*.jpeg
+*.jpg
 
 
 # Byte-compiled / optimized / DLL files
