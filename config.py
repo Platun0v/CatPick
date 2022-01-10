@@ -15,3 +15,5 @@ API_HASH = os.getenv('TG_API_HASH')
 
 STANDARD_FILE_NAME = 'img.jpeg'
 IMGS_DIR = 'imgs'
+LOG_FILE = os.getenv('LOG_FILE', 'catpick.log')
+SESSION_FILE = os.getenv('SESSION_FILE', 'CatPick.session')

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "catpick"
+version = "0.1.0"
+description = ""
+authors = ["Platun0v <me@platun0v.ru>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.27.1"
+loguru = "^0.5.3"
+vk-api = "^11.9.7"
+Telethon = "^1.24.0"
+python-dotenv = "^0.19.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

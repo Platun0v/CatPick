@@ -10,7 +10,7 @@ from loguru import logger
 
 import config
 
-logger.add('catpick.log')
+logger.add(config.LOG_FILE)
 
 
 class Vk:
@@ -24,7 +24,7 @@ class Vk:
             resp = upload.photo_profile(f)
             logger.info(resp)
 
-    def get_old_photo_id(self):  # TODO: переписать этот треш, который как-то работает у меня
+    def get_old_photo_id(self):
         resp = self.vk.method('photos.get', {'album_id': '-6'})
         logger.info(resp)
 
@@ -128,7 +128,7 @@ def process():
     vk.delete_old_photo()
     vk.delete_last_post()
 
-    tg = Tg()
+    tg = Tg(config.SESSION_FILE)
 
     tg.delete_old_photo()
     tg.upload_avatar(config.STANDARD_FILE_NAME)
