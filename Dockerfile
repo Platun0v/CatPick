@@ -39,11 +39,19 @@ RUN poetry install --no-dev
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    cron
+
 COPY ./catpick /prod/catpick
 COPY ./docker/docker-entrypoint.sh /prod/docker-entrypoint.sh
+COPY ./docker/crontab /prod/crontab
 
 RUN chmod +x /prod/docker-entrypoint.sh
 
 WORKDIR /prod
 
-ENTRYPOINT ./docker-entrypoint.sh $0 $@
+RUN crontab crontab
+RUN touch /var/log/cron.log
+
+CMD ./docker-entrypoint.sh

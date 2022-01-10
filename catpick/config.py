@@ -1,8 +1,7 @@
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
-
-import os
 
 AVATAR_PICTURE = 'cat'  # Укажите, что бы вы хотели видеть на аватарке
 
