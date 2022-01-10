@@ -1,6 +1,5 @@
 import os
 import random
-from typing import List
 
 import requests
 import vk_api
@@ -8,7 +7,7 @@ from vk_api.upload import VkUpload
 from telethon.sync import TelegramClient, functions
 from loguru import logger
 
-import config
+from catpick import config
 
 logger.add(config.LOG_FILE)
 

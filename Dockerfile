@@ -39,8 +39,7 @@ RUN poetry install --no-dev
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
-COPY ./main.py /prod/main.py
-COPY ./config.py /prod/config.py
+COPY ./catpick /prod/catpick
 COPY ./docker/docker-entrypoint.sh /prod/docker-entrypoint.sh
 
 RUN chmod +x /prod/docker-entrypoint.sh

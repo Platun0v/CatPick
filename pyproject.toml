@@ -4,6 +4,9 @@ version = "0.1.0"
 description = ""
 authors = ["Platun0v <me@platun0v.ru>"]
 
+[tool.poetry.scripts]
+bot = "catpick.main:process"
+
 [tool.poetry.dependencies]
 python = "^3.9"
 requests = "^2.27.1"
