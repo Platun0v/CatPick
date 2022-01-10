@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  bot:
+    image: catpick-image
+    build: ./
+    container_name: catpick-image
+    volumes:
+      - ./data:/prod/data
+      - ./imgs:/prod/imgs
+    env_file:
+      - ./.env_prod
+    restart: on-failure
